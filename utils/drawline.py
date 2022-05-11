@@ -27,7 +27,7 @@ def drawline(data, id_vars=['Tuning Method', "Dataset"], x_label="X_label", y_la
     assert (save_config[0] and type(save_config[1]) == str) or (not save_config[0])
     
     melted_df = pd.melt(data, id_vars=id_vars, var_name=x_label)
-    g = sns.FacetGrid(melted_df, col=facet_grid_config['col'], row=facet_grid_config["row"], height=4.2, aspect=1.33)
+    g = sns.FacetGrid(melted_df, col=facet_grid_config['col'], row=facet_grid_config["row"], sharey=False, height=6, aspect=0.9)
     g = g.map_dataframe(sns.lineplot, x=x_label, y="value", hue=id_vars[0], markers=markers, dashes=dashes, style=id_vars[0] if markers else None)
     g.set_axis_labels(x_var=x_label, y_var=y_label)
     
