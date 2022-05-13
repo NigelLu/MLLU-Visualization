@@ -4,13 +4,16 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 # endregion
 
-def drawline(data, id_vars=['Tuning Method', "Dataset"], x_label="X_label", y_label='Objective', markers=True, dashes=False, save_config=[False, None], facet_grid_config={ "col": "Dataset", "row": None }):
+
+def drawline(data, do_melt=True, hue=None, id_vars=['Tuning Method', "Dataset"], x_label="X_label", y_label='Objective', markers=True, dashes=False, save_config=[False, None], facet_grid_config={"col": "Dataset", "row": None}):
     """
         Takes in a set of arguments
         Draws/Saves the visualized lineplot using seaborn
 
             Parameters:
                 data (pandas.DataFrame): A pandas DataFrame to store all the necessary data for plotting
+                do_melt (boolean): Optional boolean argument for specifiying whether to melt the dataset according to id_vars, default to True
+                hue (str): Optional string argument for specifying what column should be used for hue if do_melt is False
                 id_vars (list): A list of strings specifying which columns to retain when melting
                 x_label (str): Optional string argument for specifying the label of X-axis, default to 'X_label'
                 y_label (str): Optional string argument for specifying the label of Y-axis, default to 'Objective'
@@ -24,13 +27,19 @@ def drawline(data, id_vars=['Tuning Method', "Dataset"], x_label="X_label", y_la
     """
 
     assert type(data) == pd.DataFrame
-    assert (save_config[0] and type(save_config[1]) == str) or (not save_config[0])
-    
-    melted_df = pd.melt(data, id_vars=id_vars, var_name=x_label)
-    g = sns.FacetGrid(melted_df, col=facet_grid_config['col'], row=facet_grid_config["row"], sharey=False, height=6, aspect=0.9)
-    g = g.map_dataframe(sns.lineplot, x=x_label, y="value", hue=id_vars[0], markers=markers, dashes=dashes, style=id_vars[0] if markers else None)
+    assert (save_config[0] and type(save_config[1])
+            == str) or (not save_config[0])
+
+    df = data
+    if do_melt:
+        df = pd.melt(data, id_vars=id_vars, var_name=x_label)
+
+    g = sns.FacetGrid(df, col=facet_grid_config['col'], row=facet_grid_config["row"],
+                      sharey=False, sharex=False, height=6, aspect=0.9)
+    g = g.map_dataframe(sns.lineplot, x=x_label, y="value" if do_melt else y_label,
+                        hue=hue if hue else id_vars[0], markers=markers, dashes=dashes, style=id_vars[0] if markers else None)
     g.set_axis_labels(x_var=x_label, y_var=y_label)
-    
+
     # add legends to graphs
     for ax in g.axes.ravel():
         ax.legend()
@@ -43,5 +52,3 @@ def drawline(data, id_vars=['Tuning Method', "Dataset"], x_label="X_label", y_la
         g.savefig(save_config[1])
     else:
         plt.show()
-
-

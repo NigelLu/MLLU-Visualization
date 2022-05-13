@@ -1,0 +1,5 @@
+{'eval_loss': 0.9857492446899414, 'eval_accuracy': 77.23316536875859, 'eval_runtime': 154.9662, 'eval_samples_per_second': 126.783, 'eval_average_metrics': 77.23316536875859, 'epoch': 8.13}
+{'eval_loss': 0.9247003793716431, 'eval_accuracy': 77.4418486282893, 'eval_runtime': 155.6436, 'eval_samples_per_second': 126.231, 'eval_average_metrics': 77.4418486282893, 'epoch': 16.26}
+{'eval_loss': 1.0388191938400269, 'eval_accuracy': 76.82597852089378, 'eval_runtime': 155.0886, 'eval_samples_per_second': 126.682, 'eval_average_metrics': 76.82597852089378, 'epoch': 24.39}
+{'eval_loss': 1.1498396396636963, 'eval_accuracy': 76.80052934290222, 'eval_runtime': 155.65, 'eval_samples_per_second': 126.226, 'eval_average_metrics': 76.80052934290222, 'epoch': 32.52}
+{'eval_loss': 1.3780227899551392, 'eval_accuracy': 76.11340153713036, 'eval_runtime': 155.314, 'eval_samples_per_second': 126.499, 'eval_average_metrics': 76.11340153713036, 'epoch': 40.65}
